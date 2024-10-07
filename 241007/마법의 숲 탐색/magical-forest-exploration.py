@@ -73,9 +73,10 @@ def move(number, position, door):
                     move_available = 0
                     continue
 
-                # 골렘이 위치하고 있을 경우 이동 불가
-                if graph[nx][ny] != 0:
-                    move_available = 0
+                if nx >= 0:
+                    # 골렘이 위치하고 있을 경우 이동 불가
+                    if graph[nx][ny] != 0:
+                        move_available = 0
 
             for i in 2, 3:
                 nx, ny = x + dx[i] + 1, y + dy[i] -1
@@ -84,9 +85,10 @@ def move(number, position, door):
                     move_available = 0
                     continue
 
-                # 골렘이 위치하고 있을 경우 이동 불가
-                if graph[nx][ny] != 0:
-                    move_available = 0
+                if nx >= 0:
+                    # 골렘이 위치하고 있을 경우 이동 불가
+                    if graph[nx][ny] != 0:
+                        move_available = 0
 
             # door 위치 회전시키기~
             if move_available:
@@ -109,10 +111,10 @@ def move(number, position, door):
                 if nx >= R or ny >= C or ny < 0:
                     move_available = 0
                     continue
-
-                # 골렘이 위치하고 있을 경우 이동 불가
-                if graph[nx][ny] != 0:
-                    move_available = 0
+                if nx >= 0:
+                    # 골렘이 위치하고 있을 경우 이동 불가
+                    if graph[nx][ny] != 0:
+                        move_available = 0
 
             for i in 1, 2:
                 nx, ny = x + dx[i] + 1, y + dy[i] + 1
@@ -121,9 +123,10 @@ def move(number, position, door):
                     move_available = 0
                     continue
 
-                # 골렘이 위치하고 있을 경우 이동 불가
-                if graph[nx][ny] != 0:
-                    move_available = 0
+                if nx >= 0:
+                    # 골렘이 위치하고 있을 경우 이동 불가
+                    if graph[nx][ny] != 0:
+                        move_available = 0
 
             # door 위치 회전시키기~
             if move_available:
