@@ -93,7 +93,7 @@ def check_conflict(key, direction, conflict_id):
             santa_point[conflict_santa_id - 1] += C
             santa[conflict_santa_id - 1][1] += direction[0] * C
             santa[conflict_santa_id - 1][2] += direction[1] * C
-            santa_life[conflict_santa_id - 1] += 2
+            santa_life[conflict_santa_id - 1] = 3
 
             # 게임판 밖으로 밀려난 산타들이 됩니다. 죽어용~
             if santa[conflict_santa_id - 1][1] < 1 or santa[conflict_santa_id -1][1] > N or santa[conflict_santa_id - 1][2] < 1 or santa[conflict_santa_id - 1][2] > N:
@@ -106,7 +106,8 @@ def check_conflict(key, direction, conflict_id):
             santa_point[conflict_santa_id - 1] += D
             santa[conflict_santa_id - 1][1] -= direction[0] * D
             santa[conflict_santa_id - 1][2] -= direction[1] * D
-            santa_life[conflict_santa_id - 1] += 2
+            santa_life[conflict_santa_id - 1] = 3
+
 
             if santa[conflict_santa_id - 1][1] < 1 or santa[conflict_santa_id -1][1] > N or santa[conflict_santa_id - 1][2] < 1 or santa[conflict_santa_id - 1][2] > N:
                 santa_life[conflict_santa_id - 1] = 0
@@ -160,7 +161,6 @@ def main():
 
     # 총 M번의 턴에 걸쳐서 게임이 진행됨
     for _ in range(M):
-
         # 루돌프의 이동 방향
         ru_direction = ru_move()
 
