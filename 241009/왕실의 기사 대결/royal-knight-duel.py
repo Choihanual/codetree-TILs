@@ -17,6 +17,8 @@ target_knight = []
 for _ in range(N):
     knight.append(list(map(int, input().split())))
 
+
+
 # 북, 동, 남, 서
 # 0, 1, 2, 3
 dx = [-1, 0, 1, 0]
@@ -66,10 +68,10 @@ def move(knight_id, direction):
             target_knight_y = [knight[i][1] - 1, knight[i][1] - 1 + knight[i][3]]
 
 
-
             # 겹치는 경우 체크
             if knight_x[0] <= target_knight_x[0] and target_knight_x[0] < knight_x[1] or (target_knight_x[0] <= knight_x[0] and knight_x[0] < target_knight_x[1]):
                 if (knight_y[0] <= target_knight_y[0] and target_knight_y[0] < knight_y[1]) or (target_knight_y[0] <= knight_y[0] and knight_y[0] < target_knight_y[1]):
+
 
                     target_knight.append(i + 1)
                     result = move(i+1, direction)
@@ -78,8 +80,8 @@ def move(knight_id, direction):
                         available_move = False
                         return available_move
 
-    knight[knight_id - 1][0] = knight_x[0] + 1
-    knight[knight_id - 1][1] = knight_y[0] + 1
+    # knight[knight_id - 1][0] = knight_x[0] + 1
+    # knight[knight_id - 1][1] = knight_y[0] + 1
 
     return available_move
 
@@ -99,6 +101,14 @@ def cal_damage(knight_id):
 
 
 
+def real_move(knight_id, direction):
+
+    knight[knight_id-1][0] += dx[direction]
+    knight[knight_id-1][1] += dy[direction]
+
+    for i in target_knight:
+        knight[i-1][0] += dx[direction]
+        knight[i-1][1] += dy[direction]
 
 
 def main():
@@ -106,11 +116,16 @@ def main():
     for _ in range(Q):
         knight_id, direction = map(int, input().split())
 
-        move_result = move(knight_id, direction)
+        move_check_result = move(knight_id, direction)
 
         # 이동했을 경우에만 기사의 체력을 감소시키면 된다.
-        if move_result == True:
+        if move_check_result == True:
+            target_knight = set(target_knight)
+
+            real_move(knight_id, direction)
             cal_damage(knight_id)
+
+
 
         target_knight = []
 
