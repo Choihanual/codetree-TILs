@@ -223,9 +223,21 @@ def main():
         # 레이저 공격부터 진행
         result = rasor_attack(attacker, target)
 
+
+
         # 레이저 공격 불가일 경우 포탄 공격
         if result == False:
             tank_attack(attacker, target)
+
+        # 만약 남은 포탑이 1개이면 종료
+        live_count = 0
+        for i in range(1, N+1):
+            for j in range(1, M+1):
+                if graph[i][j] > 0:
+                    live_count += 1
+
+        if live_count == 1:
+            break
 
         # 공격과 관련없는 포탑 +1
         for i in range(1, N+1):
@@ -247,6 +259,8 @@ def main():
                 attack_history[i][j] += 1
 
         attack_history[attacker[0]][attacker[1]] = 0
+
+
 
     max_attack = 0
     for i in range(1, N+1):
