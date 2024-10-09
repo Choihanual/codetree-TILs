@@ -66,8 +66,8 @@ def rotate_target():
     # 길이 2부터 시작하는 정사각형 브루트포스
     for i in range(2, N + 1):
 
-        for j in range(0, N - i):
-            for k in range(0, N - i):
+        for j in range(0, N + 1 - i):
+            for k in range(0, N + 1 - i):
                 is_door = 0
                 is_player = 0
 
@@ -86,6 +86,7 @@ def rotate_target():
 
                             if player[p][0] - 1 == x and player[p][1] - 1 == y:
                                 is_player = 1
+
 
                 # 둘 다 포함됐다면
                 if is_door and is_player:
