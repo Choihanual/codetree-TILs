@@ -169,6 +169,10 @@ def catch():
 
         for j in range(m):
 
+            # 이미 잡은애들은 안잡혀야지
+            if runner_life[j] == 0:
+                continue
+
             #같을경우 잡음
             if runner[j][0] == nx and runner[j][1] == ny:
                 count += 1
