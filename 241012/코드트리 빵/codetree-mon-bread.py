@@ -19,8 +19,8 @@ arrive = []
 
 # 편의점에서 사람 위치로 최단 거리 구할 예정이기 때문에 반대로
 # 상, 좌, 우, 하
-# dx = [-1, 0, 0, 1]
-# dy = [0, -1, 1, 0]
+real_dx = [-1, 0, 0, 1]
+real_dy = [0, -1, 1, 0]
 
 dx = [1, 0, 0, -1]
 dy = [0, 1, -1, 0]
@@ -36,28 +36,19 @@ def move_graph():
         if human[i][2] in arrive:
             continue
 
-        target = [human[i][0], human[i][1]]
-
-        visit = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
+        dist = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
 
         q = deque()
         q.append(store[human[i][2]])
 
-        visit[store[human[i][2]][0]][store[human[i][2]][1]] = 1
+        dist[store[human[i][2]][0]][store[human[i][2]][1]] = 1
 
         while q:
             x, y = q.popleft()
-            flag = 0
+
             for j in range(4):
                 nx = x + dx[j]
                 ny = y + dy[j]
-
-                # 목적지에 도착했을 경우
-                if nx == target[0] and ny == target[1]:
-                    human[i][0] = x
-                    human[i][1] = y
-                    flag = 1
-                    break
 
                 # 격자 밖일 경우
                 if nx < 1 or nx > n or ny < 1 or ny > n:
@@ -68,15 +59,40 @@ def move_graph():
                     continue
 
                 # 이미 방문한 경우
-                if visit[nx][ny] == 1:
+                if dist[nx][ny] > 0:
                     continue
 
-
-
+                dist[nx][ny] = dist[x][y] + 1
                 q.append([nx, ny])
 
-            if flag == 1:
-                break
+        short_dis = -1
+        short_pos = []
+
+        for h in range(4):
+            nx = human[i][0] + real_dx[h]
+            ny = human[i][1] + real_dy[h]
+
+            if nx < 1 or nx > n or ny < 1 or ny > n:
+                continue
+
+            if graph[nx][ny] < 0:
+                continue
+
+            if dist[nx][ny] == 0:
+                continue
+
+            if short_dis == -1:
+                short_dis = dist[nx][ny]
+                short_pos = [nx, ny]
+                continue
+
+            if dist[nx][ny] < short_dis:
+                short_dis = dist[nx][ny]
+                short_pos = [nx, ny]
+
+        human[i][0] = short_pos[0]
+        human[i][1] = short_pos[1]
+
 
 def check_arrive():
     for i in range(len(human)):
@@ -99,6 +115,8 @@ def base_camp(t):
     q = deque()
     q.append(store[target_store])
 
+    dist[store[target_store][0]][store[target_store][1]] = 1
+
     while q:
         x, y = q.popleft()
 
@@ -118,7 +136,6 @@ def base_camp(t):
 
             dist[nx][ny] = dist[x][y] + 1
             q.append([nx, ny])
-
 
     min_dist = inf
     start_basecamp = 0
