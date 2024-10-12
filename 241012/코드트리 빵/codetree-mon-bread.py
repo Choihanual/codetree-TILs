@@ -47,8 +47,8 @@ def move_graph():
             x, y = q.popleft()
 
             for j in range(4):
-                nx = x + dx[j]
-                ny = y + dy[j]
+                nx = x + real_dx[j]
+                ny = y + real_dy[j]
 
                 # 격자 밖일 경우
                 if nx < 1 or nx > n or ny < 1 or ny > n:
