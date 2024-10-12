@@ -106,7 +106,7 @@ def base_camp(t):
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if nx < 0 or nx > n or ny < 0 or ny > n:
+            if nx < 1 or nx > n or ny < 1 or ny > n:
                 continue
 
             if graph[nx][ny] < 0:
@@ -119,12 +119,13 @@ def base_camp(t):
             dist[nx][ny] = dist[x][y] + 1
             q.append([nx, ny])
 
+
     min_dist = inf
     start_basecamp = 0
     for i in range(1, n+1):
         for j in range(1, n+1):
             # 베이스 캠프라는 뜻
-            if graph[i][j] == 1:
+            if graph[i][j] == 1 and dist[i][j] > 0:
                 if min_dist > dist[i][j]:
                     min_dist = dist[i][j]
                     start_basecamp = [i, j]
@@ -140,6 +141,7 @@ def main():
     t = 0
     while True:
         t += 1
+
         # graph위 사람들 이동
         move_graph()
 
